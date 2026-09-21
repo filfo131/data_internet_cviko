@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Moja prvá webstránka</title>
+	<style>
+		:root {
+			font-family: "Trebuchet MS", sans-serif;
+		}
+
+		body {
+            padding: 100 px;
+			min-height: 100vh;
+			margin: 0;
+			color: #fff;
+			background: linear-gradient(120deg, #ff1493, #6a00ff, #00d9ff, #ffea00);
+			background-size: 400% 400%;
+			animation: farebny-chaos 8s ease infinite;
+			text-align: center;
+		}
+
+		header, main, footer {
+			padding: 2rem;
+		}
+
+		h1 {
+			position: relative;
+			display: inline-block;
+			margin: 2rem 0 1rem;
+			font-size: clamp(1.6rem, 8vw, 5rem);
+			font-weight: 900;
+			letter-spacing: 0.03em;
+			text-transform: uppercase;
+			-webkit-text-stroke: 2px #fff;
+			background: linear-gradient(90deg, #fff, #ffea00, #ff1493, #00ffff, #fff);
+			background-size: 300% auto;
+			-webkit-background-clip: text;
+			background-clip: text;
+			color: transparent;
+			filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 24px #ff00de);
+			animation: toc-a-trblietaj 2.2s linear infinite, duhovy-lesk 1.5s linear infinite;
+		}
+
+		h1::before,
+		h1::after {
+			content: "* + *";
+			position: absolute;
+			color: #fff;
+			font-size: 0.35em;
+			text-shadow: 0 0 8px #fff, 0 0 18px #ffea00;
+			animation: iskry 0.7s ease-in-out infinite alternate;
+		}
+
+		h1::before {
+			top: -0.5em;
+			left: -1.2em;
+		}
+
+		h1::after {
+			right: -1.2em;
+			bottom: -0.5em;
+			animation-delay: 0.35s;
+		}
+
+		@keyframes farebny-chaos {
+			0% { background-position: 0% 50%; }
+			50% { background-position: 100% 50%; }
+			100% { background-position: 0% 50%; }
+		}
+
+		@keyframes toc-a-trblietaj {
+			0% { transform: perspective(500px) rotateY(0deg) rotateX(0deg) rotateZ(-3deg); }
+			50% { transform: perspective(500px) rotateY(180deg) rotateX(12deg) rotateZ(3deg); }
+			100% { transform: perspective(500px) rotateY(360deg) rotateX(0deg) rotateZ(-3deg); }
+		}
+
+		@keyframes duhovy-lesk {
+			from { background-position: 0% center; }
+			to { background-position: 300% center; }
+		}
+
+		@keyframes iskry {
+			from { opacity: 0.2; transform: scale(0.7) rotate(0deg); }
+			to { opacity: 1; transform: scale(1.5) rotate(25deg); }
+		}
+
+		@media (prefers-reduced-motion: reduce) {
+			body, h1, h1::before, h1::after { animation-play-state: paused; }
+		}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Moja prvá webstránka</h1>
+		<p>Vitajte na mojej webstránke!</p>
+	</header>
+
+	<main>
+		<h2>O mne</h2>
+		<p>Toto je moja prvá webstránka vytvorená pomocou HTML.</p>
+	</main>
+
+	<footer>
+		<p>&copy; 2026 Moja prvá webstránka</p>
+	</footer>
+</body>
+</html>
