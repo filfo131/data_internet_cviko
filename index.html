@@ -6,27 +6,56 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Moja prvá webstránka</title>
   	<link rel="stylesheet" href="stylesheet.css">
+	<link rel="icon" type="image/x-icon" href="https://www.studujstrojarinu.sk/wp-content/uploads/2020/06/stu_og_home_01.png">
 </head>
 <body>
 	<header>
+
 		<h1>Moja prvá webstránka</h1>
 		<p>Vitajte na mojej webstránke!</p>
+
+			<nav>
+				<button>
+					<a href="index.html">Domov</a>
+				</button>
+				<button>
+					<a href="#reference">Referencia</a>
+				</button>
+				<button onclick="window.location.href='#footer'">
+				Konrakt
+				</button>
+
+			</nav>
+
 	</header>
+	
+	<section>
+		<h2>Úvod Sekcie</h2>
+		<p>Toto je moja prvá webstránka vytvorená pomocou HTML.</p>
+	</section>
+	<aside>
+		<h3>Bočný panel</h3>
+		<p>Tu môžete pridať ďalšie informácie alebo odkazy.</p>
+	</aside>
 
 	<main>
-		<h2>O mne</h2>
+		<h2>Main</h2>
 		<p>Toto je moja prvá webstránka vytvorená pomocou HTML.</p>
 
-		<img src="https://www.studujstrojarinu.sk/wp-content/uploads/2020/06/stu_og_home_01.png" alt="Logo Fakulty SJF STU" height="400">
+		<img src="https://www.studujstrojarinu.sk/wp-content/uploads/2020/06/stu_og_home_01.png" alt="Logo Fakulty SJF STU" height="120px">
 
 
-		<form action="login" method="get">
+		<form action="index.html" method="get">
 			<label for="username">Meno:</label>
 			<input type="text" name="username" placeholder="Zadajte svoje meno">
+			<br>
 			<label for="password">Heslo:</label>
 			<input type="password" name="password" placeholder="Zadajte svoje heslo">
+			<br>
 			<radio name="remember" value="yes">Súhlasím s podmienkami registrácie.</radio>
+			<br>
 			<input type="submit" value="Prihlásiť sa">
+			
 		</form>
 
 	</main>
@@ -36,5 +65,3 @@
 	</footer>
 </body>
 </html>
-git config --global user.email "you@example.com"
-  git config --global user.name "Your Name"
