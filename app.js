@@ -8,8 +8,8 @@ fetch('topbar.html')
     });
 
 
-    const button = document.getElementByID("changeButton");
-    const message = document.getAnimations("message");
+    const button = document.getElementById("changeButton");
+    const message = document.getElementById("message");
 
     if (button && message) {
         button.addEventListener("click", () => {
@@ -17,11 +17,11 @@ fetch('topbar.html')
         });
     }
     
-    const nameInput = document.getElementById("name");
+    const name = document.getElementById("name");
     const output = document.getElementById("output");
     
-    if (nameInput && output) {
-        nameInput.addEventListener("input", () => {
-            output.textContent = `Vitaj, ${nameInput.value}!`;
+    if (name && output) {
+        name.addEventListener("input", () => {
+            output.textContent = `Vitaj, ${name.value}!`;
         });
     }
