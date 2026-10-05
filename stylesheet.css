@@ -110,4 +110,8 @@ body > .topbar h3 {
   }
 }
 
-
+.topbar img.logo {
+  height: 40px;
+  width: auto;
+  border-radius: 8px;
+}
