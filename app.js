@@ -17,11 +17,11 @@ fetch('topbar.html')
         });
     }
     
-    const name = document.getElementById("name");
+    const nameInput = document.getElementById("name");
     const output = document.getElementById("output");
     
-    if (name && output) {
-        name.addEventListener("input", () => {
-            output.textContent = `Vitaj, ${name.value}!`;
+    if (nameInput && output) {
+        nameInput.addEventListener("input", () => {
+            output.textContent = `Vitaj, ${nameInput.value}!`;
         });
     }
