@@ -1,7 +1,17 @@
+// Importovanie navigačného panela z topbar.html podľa príkladu na cviku
 fetch('topbar.html')
     .then(response => response.text())
     .then(data => {
         document.body.insertAdjacentHTML("afterbegin", data);
+    })
+    .catch(error => {
+        console.error("No, zas to nefunguje: ", error);
+    });
+
+fetch('footer.html')
+    .then(response => response.text())
+    .then(data => {
+        document.body.insertAdjacentHTML("beforeend", data);
     })
     .catch(error => {
         console.error("No, zas to nefunguje: ", error);
@@ -24,4 +34,16 @@ fetch('topbar.html')
         nameInput.addEventListener("input", () => {
             output.textContent = `Vitaj, ${nameInput.value}!`;
         });
+    }
+
+    // Zmena názvu karty a hlavného nadpisu podľa názvu HTML súboru
+    const nadpis = document.getElementById("nazov_stranky");
+    const nazovSuboru = window.location.pathname.split("/").pop().replace(".html", "");
+
+    if (nazovSuboru) {
+        document.title = nazovSuboru;
+
+        if (nadpis) {
+            nadpis.textContent = nazovSuboru;
+        }
     }
