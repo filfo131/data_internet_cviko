@@ -6,26 +6,32 @@
 	<meta name="viewport" content="width=device-width">
 	<title>Databázy a internet</title>
 	<link rel="stylesheet" href="stylesheet.css">
+	<link rel="stylesheet" href="formular_zadanie.css">
 	<link rel="icon" type="image/x-icon" href="IMG/logo_sjf.png">
 	<script src="app.js" defer></script>
+    <script src="formular_zadanie.js" defer></script>
+
 </head>
 <body>
 	<main class="page-shell">
 		<div class="header-inner">
 			<h1 id="nazov_stranky">Nadpis</h1>
-            <p>
                 <form action="" method="post">
                     <label for="name">Meno a Priezvisko:</label>
                     <input type="text" id="name" name="name" placeholder="Zadajte svoje meno a priezvisko">
+
                     <br>
                     <label for="email">E-mail:</label>
                     <input type="email" id="email" name="email" placeholder="Zadajte svoj e-mail">
+
                     <br>
-                    <label for="message">Tel. číslo:</label>
+                    <label for="tel">Tel. číslo:</label>
                     <textarea id="tel" name="tel" placeholder="Zadajte svoje telefónne číslo"></textarea>
+
                     <br>
-                    <label for="narodenie">Dátum narodenia:</label>
-                    <input type="date" id="narodenie" name="narodenie">
+                    <label for="date">Dátum narodenia:</label>
+                    <input type="date" id="date" name="date">
+
                     <br>
                     <label for="kurz">Kurz:</label>
                     <select id="kurz" name="kurz">
@@ -33,6 +39,7 @@
                         <option value="data">Data Science</option>
                         <option value="cyber">Cybersecurity</option>
                     </select>
+
                     <br>
                     <label for="uroven">Úroveň vedomostí:</label>
                     <select id="uroven" name="uroven">
@@ -40,16 +47,58 @@
                         <option value="stredna">Stredná</option>
                         <option value="vysoka">Vysoká</option>
                     </select>
+
                     <br>
                     <label for="note">Poznámka:</label>
                     <textarea id="note" name="note" placeholder="Zadajte svoju poznámku"></textarea>
+
                     <br>
                     <label for="suhlas">Súhlas s podmienkami</label>
                     <input type="checkbox" id="suhlas" name="suhlas" required>
+
                     <br>
                     <button type="submit">Odoslať</button>
-            </p>
-		</div>
+                </form>
+        </div>
+        <div class="header-inner">
+                <h2>Hodnoty polí formuláru</h2>
+                <table class="form-values">
+                    <tbody>
+                    <tr>
+                        <th scope="row">Meno a priezvisko:</th>
+                        <td id="name-output"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">E-mail:</th>
+                        <td id="email-output"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Tel. číslo:</th>
+                        <td id="tel-output"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Dátum narodenia:</th>
+                        <td id="date-output"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Kurz:</th>
+                        <td id="kurz-output"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Úroveň vedomostí:</th>
+                        <td id="uroven-output"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Poznámka:</th>
+                        <td id="note-output"></td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Súhlas s podmienkami:</th>
+                        <td id="suhlas-output"></td>
+                    </tr>
+                    </tbody>
+                </table>
+        </div>
 	</main>
 </body>
 </html>
