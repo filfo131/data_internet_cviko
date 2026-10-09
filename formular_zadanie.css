@@ -34,3 +34,10 @@ label{
     width: 45%;
     font-weight: 700;
 }
+
+
+.submit {
+    text-align: center;
+    margin: 20px;
+    text-transform: uppercase;
+}
