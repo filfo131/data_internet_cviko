@@ -1,5 +1,5 @@
 document.getElementById("submit").addEventListener("click", function(event){
-  event.preventDefault()
+  event.preventDefault();
   document.getElementById("formular").style.display = "hidden";
 });
 
