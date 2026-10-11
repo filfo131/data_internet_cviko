@@ -9,8 +9,12 @@ if (!document.getElementById("formular").checkValidity()) {
 
 const inputy = ["name", "email", "tel", "kurz", "uroven", "note"];
 
-inputy[3] = document.getElementById("kurz").value;
-inputy[4] = document.getElementById("uroven").value;
+if (!document.getElementById(inputy[3])) {
+    document.getElementById(inputy[3]).value = "HTML";
+}
+if (!document.getElementById(inputy[4])) {
+document.getElementById(inputy[4]).value = "Beginner";
+}
 
 for(var i = 0; i < inputy.length; i++) {
 const input = document.getElementById(inputy[i]);
