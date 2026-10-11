@@ -18,8 +18,8 @@ if (document.getElementById(inputy[3]) && !document.getElementById(inputy[3]).va
 
 // event hodnoty do outputu
 for(var i = 0; i < inputy.length; i++) {
-    var output = document.getElementById(inputy[i] + "-output");
-    var input = document.getElementById(inputy[i]);
+    const output = document.getElementById(inputy[i] + "-output");
+    const input = document.getElementById(inputy[i]);
     if(input && output) {
         input.addEventListener("input", () => { output.textContent = ` ${input.value}`;});
     }
