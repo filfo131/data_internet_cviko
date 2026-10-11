@@ -12,8 +12,65 @@
 <body>
 	<main class="page-shell">
 		<div class="header-inner">
-			<h1 id="nazov_stranky">Nadpis</h1>
-			<p>Vitaj na tento stránke pre Databázy a internet.</p>
+			<h1 id="nazov_stranky">Zoznamy v HTML</h1>
+
+			<h2>Neusporiadaný zoznam</h2>
+			<p>Element <code>&lt;ul&gt;</code> vytvorí zoznam s odrážkami.</p>
+			<ul>
+				<li>HTML
+					<ul>
+						<li>Nadpisy</li>
+						<li>Odkazy</li>
+					</ul>
+				</li>
+				<li>CSS</li>
+				<li>JavaScript</li>
+			</ul>
+
+			<h2>Usporiadaný zoznam</h2>
+			<p>Element <code>&lt;ol&gt;</code> čísluje položky. Atribút <code>type</code> mení spôsob číslovania.</p>
+			<h3>Čísla</h3>
+			<ol type="1">
+				<li>Prvý krok</li>
+				<li>Druhý krok</li>
+			</ol>
+			<h3>Veľké písmená</h3>
+			<ol type="A">
+				<li>Možnosť A</li>
+				<li>Možnosť B</li>
+			</ol>
+			<h3>Malé písmená</h3>
+			<ol type="a">
+				<li>Možnosť a</li>
+				<li>Možnosť b</li>
+			</ol>
+			<h3>Veľké rímske číslice</h3>
+			<ol type="I">
+				<li>Prvá položka</li>
+				<li>Druhá položka</li>
+			</ol>
+			<h3>Malé rímske číslice</h3>
+			<ol type="i">
+				<li>Prvá položka</li>
+				<li>Druhá položka</li>
+			</ol>
+
+			<h3>Začiatok a opačné poradie</h3>
+			<p>Atribút <code>start</code> určuje počiatočné číslo a <code>reversed</code> obráti poradie.</p>
+			<ol start="5" reversed>
+				<li>Tretia položka</li>
+				<li>Druhá položka</li>
+				<li>Prvá položka</li>
+			</ol>
+
+			<h2>Definičný zoznam</h2>
+			<p>Element <code>&lt;dl&gt;</code> spája pojem <code>&lt;dt&gt;</code> s jeho opisom <code>&lt;dd&gt;</code>.</p>
+			<dl>
+				<dt>HTML</dt>
+				<dd>Jazyk na vytváranie štruktúry webovej stránky.</dd>
+				<dt>CSS</dt>
+				<dd>Jazyk na úpravu vzhľadu webovej stránky.</dd>
+			</dl>
 		</div>
 	</main>
 </body>
