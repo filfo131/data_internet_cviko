@@ -10,7 +10,7 @@ if (!document.getElementById("formular").checkValidity()) {
 const inputy = ["name", "email", "tel", "kurz", "uroven", "note"];
 
 inputy[3] = document.getElementById("kurz").value;
-inputy[5] = document.getElementById("note").value;
+inputy[4] = document.getElementById("uroven").value;
 
 for(var i = 0; i < inputy.length; i++) {
 const input = document.getElementById(inputy[i]);
