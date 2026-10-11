@@ -9,30 +9,35 @@ if (!document.getElementById("formular").checkValidity()) {
 });
 
 // výpis hodnot do outputu
-const inputy = ["name", "email", "tel", "uroven", "kurz", "note"];
+const inputy = ["name", "email", "tel", "kurz", "note"];
 
 //defatult hodnoty pre kurz a úroveň
 if (document.getElementById(inputy[3]) && !document.getElementById(inputy[3]).value) {
     document.getElementById(inputy[3]).value = "HTML";
-}
-if (document.getElementById(inputy[4]) && !document.getElementById(inputy[4]).value) {
-    document.getElementById(inputy[4]).value = "Beginner";
 }
 
 // event hodnoty do outputu
 for(var i = 0; i < inputy.length; i++) {
     var output = document.getElementById(inputy[i] + "-output");
     
-    if (document.getElementById(inputy[i]) && output && inputy[i] != "uroven" && input.type !== "checkbox" && input.type !== "date" && input.type !== "radio") {
+    if (document.getElementById(inputy[i]) && output && input.type !== "checkbox" && input.type !== "date" && input.type !== "radio") {
         var input = document.getElementById(inputy[i]);
         input.addEventListener("input", () => { output.textContent = ` ${input.value}`;});
     }
-    else if (output && inputy[i] == "uroven") {
-        var input = document.querySelectorAll(`input[name="uroven"]`);
-        input.addEventListener("input", () => { output.textContent = ` ${input.options[input.selectedIndex].text}`;});
-    }
 
 }
+
+// riesenie radio button pre úroveň vypis do outputu
+const radioOutput = document.getElementById("uroven-output");
+    if (radioOutput) {
+        const radioInput = document.querySelectorAll(`input[name="uroven"]`);
+        radioInput.forEach((radio) => { radio.addEventListener("input", () => {
+            if (radio.checked) { radioOutput.textContent = ` ${radio.value}`;
+                }
+            });
+        });
+    }
+
 
 // event hodnoty do outputu pre datum s koreciou formou zobrazenia
 const date = document.getElementById("date");
