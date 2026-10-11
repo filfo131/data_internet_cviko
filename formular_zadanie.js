@@ -1,3 +1,4 @@
+// odoslanie formulára - block reload stránky a zobrazenie alertu
 document.getElementById("formular").addEventListener("submit", function(event){
 if (!document.getElementById("formular").checkValidity()) {
     return;
@@ -7,8 +8,10 @@ if (!document.getElementById("formular").checkValidity()) {
   alert("Formulár bol úspešne odoslaný.")
 });
 
-const inputy = ["name", "email", "tel", "kurz", "uroven", "note"];
+// výpis hodnot do outputu
+const inputy = ["name", "email", "tel", "uroven", "kurz", "note"];
 
+//defatult hodnoty pre kurz a úroveň
 if (document.getElementById(inputy[3]) && !document.getElementById(inputy[3]).value) {
     document.getElementById(inputy[3]).value = "HTML";
 }
@@ -16,16 +19,22 @@ if (document.getElementById(inputy[4]) && !document.getElementById(inputy[4]).va
     document.getElementById(inputy[4]).value = "Beginner";
 }
 
+// event hodnoty do outputu
 for(var i = 0; i < inputy.length; i++) {
-const input = document.getElementById(inputy[i]);
-const output = document.getElementById(inputy[i] + "-output");
-
-    if (input && output) {
-        input.addEventListener("input", () => { output.textContent = ` ${input.value}`;
-        });
+    var output = document.getElementById(inputy[i] + "-output");
+    
+    if (input && output && inputy[i] != "uroven" && input.type !== "checkbox" && input.type !== "date" && input.type !== "radio") {
+        var input = document.getElementById(inputy[i]);
+        input.addEventListener("input", () => { output.textContent = ` ${input.value}`;});
     }
+    elseif (input && output && inputy[i] == "uroven") {
+        var input = document.querySelectorAll(`input[name="uroven"]`);
+        input.addEventListener("input", () => { output.textContent = ` ${input.options[input.selectedIndex].text}`;});
+    }
+
 }
 
+// event hodnoty do outputu pre datum s koreciou formou zobrazenia
 const date = document.getElementById("date");
 const dateOutput = document.getElementById("date-output");
 
@@ -40,6 +49,7 @@ const dateOutput = document.getElementById("date-output");
         });
     }
 
+// event hodnoty do outputu pre checkbox
 const suhlas = document.getElementById("suhlas");
 const suhlasOutput = document.getElementById("suhlas-output");
 
