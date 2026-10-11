@@ -61,6 +61,14 @@ h1 {
   min-height: 42px;
 }
 
+table { border-collapse: collapse; }
+
+th,
+td { border: 1px solid #cbd5e1; padding: 8px; }
+
+thead,
+tfoot { background: #e2e8f0; }
+
 .demo-panel { text-align: left; }
 
 .demo-text,
