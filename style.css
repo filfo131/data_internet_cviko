@@ -2,8 +2,8 @@
   box-sizing: border-box;
 }
 
-.navbar a img {
-  border-radius: 999px;
+.topbar img {
+  border-radius: 12px;
   width: 50px;
   height: 40px;
   object-fit: cover;
