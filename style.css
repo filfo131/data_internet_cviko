@@ -42,8 +42,8 @@ h1 {
 }
 
 .topbar img {
-  width: 50px;
-  height: 40px;
+  width: 80px;
+  height: 50px;
   border-radius: 12px;
   object-fit: cover;
 }
