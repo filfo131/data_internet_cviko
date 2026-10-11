@@ -23,11 +23,11 @@ if (document.getElementById(inputy[4]) && !document.getElementById(inputy[4]).va
 for(var i = 0; i < inputy.length; i++) {
     var output = document.getElementById(inputy[i] + "-output");
     
-    if (input && output && inputy[i] != "uroven" && input.type !== "checkbox" && input.type !== "date" && input.type !== "radio") {
+    if (document.getElementById(inputy[i]) && output && inputy[i] != "uroven" && input.type !== "checkbox" && input.type !== "date" && input.type !== "radio") {
         var input = document.getElementById(inputy[i]);
         input.addEventListener("input", () => { output.textContent = ` ${input.value}`;});
     }
-    elseif (input && output && inputy[i] == "uroven") {
+    else if (output && inputy[i] == "uroven") {
         var input = document.querySelectorAll(`input[name="uroven"]`);
         input.addEventListener("input", () => { output.textContent = ` ${input.options[input.selectedIndex].text}`;});
     }
