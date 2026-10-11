@@ -19,24 +19,23 @@ if (document.getElementById(inputy[3]) && !document.getElementById(inputy[3]).va
 // event hodnoty do outputu
 for(var i = 0; i < inputy.length; i++) {
     var output = document.getElementById(inputy[i] + "-output");
-    
-    if (document.getElementById(inputy[i]) && output && input.type !== "checkbox" && input.type !== "date" && input.type !== "radio") {
-        var input = document.getElementById(inputy[i]);
+    var input = document.getElementById(inputy[i]);
+    if(input && output) {
         input.addEventListener("input", () => { output.textContent = ` ${input.value}`;});
     }
-
 }
 
 // riesenie radio button pre úroveň vypis do outputu
 const radioOutput = document.getElementById("uroven-output");
-    if (radioOutput) {
-        const radioInput = document.querySelectorAll(`input[name="uroven"]`);
-        radioInput.forEach((radio) => { radio.addEventListener("input", () => {
-            if (radio.checked) { radioOutput.textContent = ` ${radio.value}`;
-                }
-            });
-        });
-    }
+const radioInput = document.querySelectorAll('input[name="uroven"]');
+
+radioInput.forEach((radio) => {
+    radio.addEventListener("change", () => {
+        if (radio.checked) {
+            radioOutput.textContent = radio.value;
+        }
+    });
+});
 
 
 // event hodnoty do outputu pre datum s koreciou formou zobrazenia
