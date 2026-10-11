@@ -2,7 +2,7 @@
   box-sizing: border-box;
 }
 
-.navbar img {
+.navbar a img {
   border-radius: 999px;
   width: 50px;
   height: 40px;
