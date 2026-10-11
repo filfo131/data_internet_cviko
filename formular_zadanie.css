@@ -71,3 +71,9 @@ form button {
     width: 62%;
     word-break: break-word;
 }
+
+form input[type="radio"]:hover + label,
+form input[type="checkbox"]:hover + label {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
