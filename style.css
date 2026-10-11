@@ -61,6 +61,28 @@ h1 {
   min-height: 42px;
 }
 
+.table-scroll { overflow-x: auto; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+caption { padding: 10px; font-weight: 700; }
+
+th,
+td {
+  border: 1px solid #cbd5e1;
+  padding: 10px;
+  text-align: left;
+}
+
+thead,
+tfoot { background: #e2e8f0; }
+
+tbody tr:nth-child(even) { background: #f3f6fb; }
+
 .demo-panel { text-align: left; }
 
 .demo-text,

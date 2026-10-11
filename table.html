@@ -12,7 +12,57 @@
 <body>
 	<main class="page-shell">
 		<div class="header-inner">
-			<h1 id="nazov_stranky">Nadpis</h1>
+			<h1>Ukážkový rozvrh hodín</h1>
+			<p>Tabuľka používa hlavičku, pätičku a spojené bunky.</p>
+			<div class="table-scroll">
+				<table>
+					<caption>Rozvrh kurzu webových technológií</caption>
+					<thead>
+						<tr>
+							<th scope="col">Deň</th>
+							<th scope="col">Čas</th>
+							<th scope="col">Predmet</th>
+							<th scope="col">Miestnosť</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup" rowspan="2">Pondelok</th>
+							<td>8:00 – 9:30</td>
+							<td>HTML a sémantika</td>
+							<td>A-201</td>
+						</tr>
+						<tr>
+							<td>9:45 – 11:15</td>
+							<td>CSS základy</td>
+							<td>A-201</td>
+						</tr>
+						<tr>
+							<th scope="row">Utorok</th>
+							<td>10:00 – 11:30</td>
+							<td>JavaScript</td>
+							<td>B-105</td>
+						</tr>
+						<tr>
+							<th scope="row">Streda</th>
+							<td>12:00 – 12:30</td>
+							<td colspan="2">Prestávka</td>
+						</tr>
+						<tr>
+							<th scope="row">Štvrtok</th>
+							<td>8:30 – 10:00</td>
+							<td>Praktické cvičenie</td>
+							<td>Laboratórium 2</td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th scope="row" colspan="3">Počet vyučovacích blokov</th>
+							<td>4</td>
+						</tr>
+					</tfoot>
+				</table>
+			</div>
         </div>
 	</main>
 </body>
