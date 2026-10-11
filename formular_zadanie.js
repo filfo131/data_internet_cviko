@@ -9,10 +9,10 @@ if (!document.getElementById("formular").checkValidity()) {
 
 const inputy = ["name", "email", "tel", "kurz", "uroven", "note"];
 
-if (!document.getElementById(inputy[3])) {
+if (!document.getElementById(inputy[3]).value) {
     document.getElementById(inputy[3]).value = "HTML";
 }
-if (!document.getElementById(inputy[4])) {
+if (!document.getElementById(inputy[4]).value) {
 document.getElementById(inputy[4]).value = "Beginner";
 }
 
