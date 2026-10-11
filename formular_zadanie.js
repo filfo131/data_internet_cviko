@@ -8,6 +8,9 @@ if (!document.getElementById("suhlas").checkValidity()) {
 
 const inputy = ["name", "email", "tel", "kurz", "number", "uroven", "note"];
 
+inputy[3] = "HTML";
+inputy[5] = "Beginner";
+
 for(var i = 0; i < inputy.length; i++) {
 const input = document.getElementById(inputy[i]);
 const output = document.getElementById(inputy[i] + "-output");
