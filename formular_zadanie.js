@@ -1,12 +1,13 @@
 document.getElementById("formular").addEventListener("submit", function(event){
-if (!document.getElementById("suhlas").checkValidity()) {
+if (!document.getElementById("formular").checkValidity()) {
     return;
 }
   event.preventDefault(),
-  document.getElementById("formular_div").style.display = "none"
+  document.getElementById("formular_div").style.display = "none",
+  alert("Formulár bol úspešne odoslaný.")
 });
 
-const inputy = ["name", "email", "tel", "kurz", "number", "uroven", "note"];
+const inputy = ["name", "email", "tel", "kurz", "uroven", "note"];
 
 inputy[3] = "HTML";
 inputy[5] = "Beginner";
