@@ -3,7 +3,7 @@ if (!document.getElementById("suhlas").checkValidity()) {
     return;
 }
   event.preventDefault(),
-  document.getElementById("formular").style.display = "none"
+  document.getElementById("formular_div").style.display = "none"
 });
 
 const inputy = ["name", "email", "tel", "kurz", "number", "uroven", "note"];
