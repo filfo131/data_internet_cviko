@@ -16,7 +16,7 @@
 	<main class="page-shell">
 		<div class="header-inner">
 			<h1 id="nazov_stranky">Nadpis</h1>
-                <form action="" method="post">
+                <form action="" method="post" id="formular">
                     <label for="name">Meno a Priezvisko:</label>
                     <input type="text" id="name" name="name" placeholder="Zadajte svoje meno a priezvisko">
 
@@ -26,7 +26,7 @@
 
                     <br>
                     <label for="tel">Tel. číslo:</label>
-                    <textarea id="tel" name="tel" placeholder="Zadajte svoje telefónne číslo"></textarea>
+                    <textarea type="tel" id="tel" name="tel" placeholder="Zadajte svoje telefónne číslo"></textarea>
 
                     <br>
                     <label for="date">Dátum narodenia:</label>
@@ -35,17 +35,17 @@
                     <br>
                     <label for="kurz">Kurz:</label>
                     <select id="kurz" name="kurz">
-                        <option value="web">Web Development</option>
-                        <option value="data">Data Science</option>
-                        <option value="cyber">Cybersecurity</option>
+                        <option value="HTML">HTML</option>
+                        <option value="CSS">CSS</option>
+                        <option value="JavaScript">JavaScript</option>
                     </select>
 
                     <br>
-                    <label for="uroven">Úroveň vedomostí:</label>
+                    <label for="uroven">Úroveň:</label>
                     <select id="uroven" name="uroven">
-                        <option value="zakladna">Základná</option>
-                        <option value="stredna">Stredná</option>
-                        <option value="vysoka">Vysoká</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
                     </select>
 
                     <br>
@@ -57,7 +57,7 @@
                     <input type="checkbox" id="suhlas" name="suhlas" required>
 
                     <br>
-                    <button type="submit" class="submit">Odoslať</button>
+                    <button type="submit" id="submit" class="submit">Odoslať</button>
                 </form>
         </div>
         <div class="header-inner">
@@ -85,7 +85,7 @@
                         <td id="kurz-output"></td>
                     </tr>
                     <tr>
-                        <th scope="row">Úroveň vedomostí:</th>
+                        <th scope="row">Úroveň:</th>
                         <td id="uroven-output"></td>
                     </tr>
                     <tr>

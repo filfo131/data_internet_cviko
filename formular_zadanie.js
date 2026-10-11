@@ -1,4 +1,7 @@
-
+document.getElementById("submit").addEventListener("click", function(event){
+  event.preventDefault()
+  document.getElementById("formular").style.display = "hidden";
+});
 
 const inputy = ["name", "email", "tel", "kurz", "number", "uroven", "note"];
 
