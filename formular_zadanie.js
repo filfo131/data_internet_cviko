@@ -9,11 +9,11 @@ if (!document.getElementById("formular").checkValidity()) {
 
 const inputy = ["name", "email", "tel", "kurz", "uroven", "note"];
 
-if (!document.getElementById(inputy[3]).value) {
+if (document.getElementById(inputy[3]) && !document.getElementById(inputy[3]).value) {
     document.getElementById(inputy[3]).value = "HTML";
 }
-if (!document.getElementById(inputy[4]).value) {
-document.getElementById(inputy[4]).value = "Beginner";
+if (document.getElementById(inputy[4]) && !document.getElementById(inputy[4]).value) {
+    document.getElementById(inputy[4]).value = "Beginner";
 }
 
 for(var i = 0; i < inputy.length; i++) {
