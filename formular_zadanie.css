@@ -18,6 +18,9 @@ form textarea {
     box-sizing: border-box;
 }
 
+form input[type="radio"],
+form input[type="checkbox"] { width: auto; }
+
 form textarea {
     min-height: 100px;
 }
