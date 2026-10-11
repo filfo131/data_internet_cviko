@@ -130,3 +130,8 @@ footer {
   font-size: 0.9rem;
   color: var(--muted);
 }
+
+p .hlavny-text {
+  text-align: justify;
+  text-justify: inter-word;
+} 
