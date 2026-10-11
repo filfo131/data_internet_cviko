@@ -28,10 +28,19 @@ form textarea {
 }
 
 form fieldset {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     grid-column: 2;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 6px;
+}
+
+fieldset label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 10px;
 }
 
 form button {
