@@ -18,23 +18,23 @@
 			<h1 id="nazov_stranky">Nadpis</h1>
                 <form action="" method="post" id="formular">
                     <label for="name">Meno a Priezvisko:</label>
-                    <input type="text" id="name" name="name" placeholder="Zadajte svoje meno a priezvisko">
+                    <input type="text" id="name" name="name" placeholder="Zadajte svoje meno a priezvisko" autofocus required>
 
                     <br>
                     <label for="email">E-mail:</label>
-                    <input type="email" id="email" name="email" placeholder="Zadajte svoj e-mail">
+                    <input type="email" id="email" name="email" placeholder="Zadajte svoj e-mail" required>
 
                     <br>
                     <label for="tel">Tel. číslo:</label>
-                    <textarea type="tel" id="tel" name="tel" placeholder="Zadajte svoje telefónne číslo"></textarea>
+                    <input type="tel" id="tel" name="tel" placeholder="Zadajte svoje telefónne číslo" required>
 
                     <br>
                     <label for="date">Dátum narodenia:</label>
-                    <input type="date" id="date" name="date">
+                    <input type="date" id="date" name="date" required>
 
                     <br>
                     <label for="kurz">Kurz:</label>
-                    <select id="kurz" name="kurz">
+                    <select id="kurz" name="kurz" default-value="HTML">
                         <option value="HTML">HTML</option>
                         <option value="CSS">CSS</option>
                         <option value="JavaScript">JavaScript</option>
@@ -42,15 +42,15 @@
 
                     <br>
                     <label for="uroven">Úroveň:</label>
-                    <select id="uroven" name="uroven">
+                    <select id="uroven" name="uroven" default-value="Beginner">
                         <option value="Beginner">Beginner</option>
                         <option value="Intermediate">Intermediate</option>
                         <option value="Advanced">Advanced</option>
                     </select>
 
                     <br>
-                    <label for="note">Poznámka:</label>
-                    <textarea id="note" name="note" placeholder="Zadajte svoju poznámku"></textarea>
+                    <label for="note" wrap="hard">Poznámka:</label>
+                    <textarea id="note" name="note" placeholder="Zadajte svoju poznámku" rows="4" cols="50"></textarea>
 
                     <br>
                     <label for="suhlas">Súhlas s podmienkami</label>
