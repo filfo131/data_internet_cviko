@@ -10,7 +10,6 @@ form br {
 
 form label {
     font-weight: bold;
-    text-align: left;
 }
 
 form input,
@@ -40,7 +39,7 @@ form fieldset {
 fieldset label {
     display: inline-flex;
     align-items: center;
-    margin-right: 10px;
+    gap: 6px;
 }
 
 form button {
@@ -54,15 +53,9 @@ form button {
     cursor: pointer;
 }
 
-.form-values {
-    width: 100%;
-    border-collapse: collapse;
-}
-
 .form-values th,
 .form-values td {
     padding: 8px 10px;
-    border-bottom: 1px solid #ddd;
     text-align: left;
     vertical-align: top;
 }
