@@ -19,7 +19,20 @@ form textarea {
 }
 
 form input[type="radio"],
-form input[type="checkbox"] { width: auto; }
+form input[type="checkbox"] {
+    width: auto;
+}
+
+form input[type="radio"]:hover,
+form input[type="checkbox"]:hover {
+    cursor: pointer;
+}
+
+form fieldset label:hover,
+form label[for="suhlas"]:hover {
+    background: #f0f0f0;
+    border-radius: 6px;
+}
 
 form textarea {
     min-height: 100px;
@@ -75,8 +88,3 @@ form button {
     word-break: break-word;
 }
 
-form fieldset label:hover,
-form label[for="suhlas"]:hover {
-    background: #f0f0f0;
-    border-radius: 6px;
-}
