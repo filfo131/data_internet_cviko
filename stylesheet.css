@@ -2,6 +2,13 @@
   box-sizing: border-box;
 }
 
+nav img {
+  border-radius: 999px;
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+}
+
 body {
   margin: 0;
   font-family: Arial, sans-serif;
