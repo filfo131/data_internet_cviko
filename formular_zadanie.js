@@ -1,4 +1,7 @@
-document.getElementById("submit").addEventListener("click", function(event){
+document.getElementById("formular").addEventListener("submit", function(event){
+if (!document.getElementById("suhlas").checkValidity()) {
+    return;
+}
   event.preventDefault(),
   document.getElementById("formular").style.display = "none"
 });
