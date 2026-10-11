@@ -36,6 +36,22 @@ fetch('footer.html')
         });
     }
 
+    // DARK MODe
+
+    const themeButton = document.getElementById("themeButton");
+
+    if (themeButton) {
+        themeButton.addEventListener("click", () => {
+            document.body.classList.toggle("dark-mode");
+
+            if (document.body.classList.contains("dark-mode")) {
+                themeButton.textContent = "Light mode";
+            } else {
+                themeButton.textContent = "Dark mode";
+            }
+        });
+    }
+
     // Zmena názvu karty a hlavného nadpisu podľa názvu HTML súboru
     const nadpis = document.getElementById("nazov_stranky");
     const nazovSuboru = window.location.pathname.split("/").pop().replace(".html", "");
@@ -47,3 +63,5 @@ fetch('footer.html')
             nadpis.textContent = nazovSuboru;
         }
     }
+
+

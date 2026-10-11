@@ -9,6 +9,11 @@ body {
   color: #1e293b;
 }
 
+.dark-mode {
+  background: #1e293b;
+  color: #f3f6fb;
+}
+
 .page-shell {
   min-height: 100vh;
   display: flex;
