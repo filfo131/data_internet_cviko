@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Knižnica – zoznam kníh</title>
+	<style>
+		body { font-family: Arial, sans-serif; max-width: 1000px; margin: 40px auto; padding: 0 16px; color: #222; }
+		h1 { margin-bottom: 20px; }
+		.table-wrap { overflow-x: auto; }
+		table { width: 100%; border-collapse: collapse; }
+		th, td { padding: 10px 12px; border: 1px solid #d5d5d5; text-align: left; }
+		th { background: #f1f3f5; }
+		tbody tr:nth-child(even) { background: #fafafa; }
+		#stav { margin: 12px 0; color: #555; }
+		#stav.chyba { color: #b00020; }
+		#formular-knihy { margin-top: 32px; max-width: 480px; }
+		#formular-knihy label { display: block; margin: 12px 0 4px; }
+		#formular-knihy input, #formular-knihy select, #formular-knihy button {
+			box-sizing: border-box;
+			width: 100%;
+			padding: 9px;
+			font: inherit;
+		}
+		#formular-knihy button { margin-top: 16px; cursor: pointer; }
+	</style>
+</head>
+<body>
+	<h1>Knihy v knižnici</h1>
+	<p id="stav" role="status">Načítavam knihy…</p>
+	<div class="table-wrap">
+		<table id="tabulka-knih" hidden>
+			<thead></thead>
+			<tbody></tbody>
+		</table>
+	</div>
+
+	<section id="formular-knihy">
+		<h2>Pridať knihu</h2>
+		<form id="nova-kniha">
+			<label for="nazov">Názov knihy</label>
+			<input id="nazov" name="nazov" type="text" maxlength="255" required>
+
+			<label for="autor">Autor</label>
+			<select id="autor" name="autor_id" required>
+				<option value="">Načítavam autorov…</option>
+			</select>
+
+			<label for="rok">Rok vydania</label>
+			<input id="rok" name="rok" type="number" min="1" max="9999" step="1" required>
+
+			<label for="cena">Cena (€)</label>
+			<input id="cena" name="cena" type="number" min="0" step="0.01" value="0" required>
+
+			<label for="zaner">Žáner (nepovinné)</label>
+			<input id="zaner" name="zaner" type="text" maxlength="100">
+
+			<button type="submit">Pridať knihu</button>
+		</form>
+	</section>
+
+	<script>
+		const stav = document.getElementById('stav');
+		const tabulka = document.getElementById('tabulka-knih');
+		const formular = document.getElementById('nova-kniha');
+
+		async function nacitajKnihy() {
+			const odpoved = await fetch('/api/kniznica');
+			if (!odpoved.ok) throw new Error(`Server vrátil chybu ${odpoved.status}.`);
+			zobrazKnihy(await odpoved.json());
+		}
+
+		function zobrazKnihy(data) {
+			const knihy = Array.isArray(data) ? data : (data.knihy ?? data.books ?? data.data ?? []);
+			const hlavicka = tabulka.querySelector('thead');
+			const telo = tabulka.querySelector('tbody');
+			telo.replaceChildren();
+
+			if (!Array.isArray(knihy) || knihy.length === 0) {
+				stav.textContent = 'V databáze sa nenašli žiadne knihy.';
+				hlavicka.replaceChildren();
+				tabulka.hidden = true;
+				return;
+			}
+
+			const stlpce = [...new Set(knihy.flatMap(kniha => Object.keys(kniha)))];
+			const riadokHlavicky = document.createElement('tr');
+
+			stlpce.forEach(stlpec => {
+				const bunka = document.createElement('th');
+				bunka.scope = 'col';
+				bunka.textContent = stlpec;
+				riadokHlavicky.appendChild(bunka);
+			});
+			const hlavickaAkcie = document.createElement('th');
+			hlavickaAkcie.scope = 'col';
+			hlavickaAkcie.textContent = 'Akcia';
+			riadokHlavicky.appendChild(hlavickaAkcie);
+			hlavicka.replaceChildren(riadokHlavicky);
+
+			knihy.forEach(kniha => {
+				const riadok = document.createElement('tr');
+				stlpce.forEach(stlpec => {
+					const bunka = document.createElement('td');
+					const hodnota = kniha[stlpec];
+					bunka.textContent = hodnota == null
+						? ''
+						: typeof hodnota === 'object' ? JSON.stringify(hodnota) : String(hodnota);
+					riadok.appendChild(bunka);
+				});
+				const bunkaAkcie = document.createElement('td');
+				const tlacidlo = document.createElement('button');
+				tlacidlo.type = 'button';
+				tlacidlo.textContent = 'Vymazať';
+				tlacidlo.dataset.id = kniha.id;
+				bunkaAkcie.appendChild(tlacidlo);
+				riadok.appendChild(bunkaAkcie);
+				telo.appendChild(riadok);
+			});
+
+			stav.textContent = `Počet kníh: ${knihy.length}`;
+			tabulka.hidden = false;
+		}
+
+		fetch('/api/autori')
+			.then(odpoved => {
+				if (!odpoved.ok) throw new Error(`Server vrátil chybu ${odpoved.status}.`);
+				return odpoved.json();
+			})
+			.then(autori => {
+				const vyber = document.getElementById('autor');
+				vyber.replaceChildren(new Option('Vyberte autora', ''));
+				autori.forEach(autor => vyber.add(new Option(autor.meno, autor.id)));
+			})
+			.catch(chyba => {
+				const vyber = document.getElementById('autor');
+				vyber.replaceChildren(new Option('Autorov sa nepodarilo načítať', ''));
+				stav.textContent = `Autorov sa nepodarilo načítať: ${chyba.message}`;
+				stav.classList.add('chyba');
+			});
+
+		formular.addEventListener('submit', async udalost => {
+			udalost.preventDefault();
+			const tlacidlo = formular.querySelector('button[type="submit"]');
+			tlacidlo.disabled = true;
+
+			try {
+				const udaje = Object.fromEntries(new FormData(formular));
+				const odpoved = await fetch('/api/kniznica', {
+					method: 'POST',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(udaje),
+				});
+				const vysledok = await odpoved.json();
+				if (!odpoved.ok) throw new Error(vysledok.error || `Server vrátil chybu ${odpoved.status}.`);
+
+				formular.reset();
+				document.getElementById('cena').value = '0';
+				await nacitajKnihy();
+				stav.classList.remove('chyba');
+				stav.textContent = 'Kniha bola pridaná.';
+			} catch (chyba) {
+				stav.textContent = `Knihu sa nepodarilo pridať: ${chyba.message}`;
+				stav.classList.add('chyba');
+			} finally {
+				tlacidlo.disabled = false;
+			}
+		});
+
+		tabulka.querySelector('tbody').addEventListener('click', async udalost => {
+			const tlacidlo = udalost.target.closest('button[data-id]');
+			if (!tlacidlo) return;
+
+			tlacidlo.disabled = true;
+			try {
+				const odpoved = await fetch(`/api/kniznica/${encodeURIComponent(tlacidlo.dataset.id)}`, {
+					method: 'DELETE',
+				});
+				if (!odpoved.ok) {
+					const chyba = await odpoved.json().catch(() => ({}));
+					throw new Error(chyba.error || `Server vrátil chybu ${odpoved.status}.`);
+				}
+
+				tlacidlo.closest('tr').remove();
+				const zostava = tabulka.querySelectorAll('tbody tr').length;
+				stav.textContent = zostava
+					? `Počet kníh: ${zostava}`
+					: 'V databáze sa nenašli žiadne knihy.';
+			} catch (chyba) {
+				stav.textContent = `Knihu sa nepodarilo vymazať: ${chyba.message}`;
+				stav.classList.add('chyba');
+				tlacidlo.disabled = false;
+			}
+		});
+
+		nacitajKnihy().catch(chyba => {
+			stav.textContent = `Knihy sa nepodarilo načítať: ${chyba.message}`;
+			stav.classList.add('chyba');
+		});
+	</script>
+</body>
+</html>

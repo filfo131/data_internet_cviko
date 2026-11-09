@@ -1,0 +1,44 @@
+services:
+  mariadb:
+    image: mariadb:11.4
+    network_mode: host
+    command: --bind-address=172.31.240.1
+    environment:
+      MARIADB_DATABASE: ${MARIADB_DATABASE:-kniznica}
+      MARIADB_USER: ${MARIADB_USER:-cviko}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD:?Set MARIADB_PASSWORD in .env}
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD:?Set MARIADB_ROOT_PASSWORD in .env}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./database/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  phpmyadmin:
+    image: phpmyadmin:5.2-apache
+    environment:
+      PMA_HOST: host.docker.internal
+      PMA_PORT: 3306
+    extra_hosts:
+      - "host.docker.internal:172.31.240.1"
+    ports:
+      - "127.0.0.1:8080:80"
+    networks:
+      - phpmyadmin_network
+    depends_on:
+      mariadb:
+        condition: service_healthy
+
+networks:
+  phpmyadmin_network:
+    ipam:
+      config:
+        - subnet: 172.31.240.0/24
+          gateway: 172.31.240.1
+
+volumes:
+  mariadb_data:

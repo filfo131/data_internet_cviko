@@ -71,3 +71,37 @@ Druhou úlohou je vytvorenie novej podstránky formular_zadanie.html:
 6) Podstránka musí mať topbar.html ako v predchádzajúcich stránkach a vlastný CSS stylesheet formular_zadanie.css.
 
 Celú webstránku zabaliť do .zip súboru a pomenujte ho ako priezvisko_zadanie1.zip.
+
+## Databáza MariaDB a phpMyAdmin
+
+Projekt obsahuje lokálny vývojový stack pre MariaDB a phpMyAdmin spúšťaný cez Docker Compose.
+Pred prvým spustením skopírujte `.env.example` do `.env` a upravte heslá:
+
+```sh
+cp .env.example .env
+```
+
+Spustenie a zastavenie služieb:
+
+```sh
+docker compose up -d
+docker compose down
+```
+
+phpMyAdmin bude dostupný na [http://localhost:8080](http://localhost:8080).
+Prihláste sa používateľom a heslom z `.env` (predvolene používateľ `cviko`).
+Databáza sa volá `kniznica`; tabuľky `autori` a `knihy` sa vytvoria pri prvom spustení.
+Údaje pretrvajú aj po zastavení kontajnerov vo volume `mariadb_data`.
+
+phpMyAdmin publikuje port `8080` a pripája sa k MariaDB cez súkromnú Docker bridge
+sieť. V Codespaces otvorte kartu **Ports** a pri porte `8080` zvoľte
+**Open in Browser**; port nechajte ako **Private**. MariaDB používa hostiteľskú
+sieť, ale počúva iba na internej adrese Docker bridge siete.
+
+Backend spustíte z priečinka `backend` príkazom `npm start`. Načíta nastavenia
+z koreňového `.env` súboru a pripojí sa k databáze MariaDB. Dostupné sú
+`GET /api/knihy` (zoznam), `POST /api/kniha` (pridanie) a
+`DELETE /api/kniha/:id` (vymazanie); HTML katalóg je na `/`.
+
+Toto nastavenie je určené na lokálny vývoj. Nepoužívajte ukážkové heslá pri
+sprístupnení služieb mimo svojho počítača.

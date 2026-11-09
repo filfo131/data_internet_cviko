@@ -2,7 +2,7 @@ const http = require('node:http');
 const path = require('node:path');
 const { DatabaseSync } = require('node:sqlite');
 
-const db = new DatabaseSync(path.join(__dirname, 'cviko.db'), { readOnly: true });
+const db = new DatabaseSync(path.join(__dirname, 'database.db'), { readOnly: true });
 const port = Number(process.env.PORT || 3000);
 
 function escapeHtml(value) {
@@ -24,16 +24,17 @@ const server = http.createServer((req, res) => {
 
     try {
         const knihy = db.prepare(`
-            SELECT id, "názov" AS nazov, autor_id, rok_vydania, cena
+            SELECT knihy.id, knihy."názov" AS nazov, autori.meno AS autor, knihy.rok_vydania, knihy.cena
             FROM knihy
-            ORDER BY id
+            LEFT JOIN autori ON knihy.autor_id = autori.id
+            ORDER BY knihy.id
         `).all();
 
         const rows = knihy.map(kniha => `
             <tr>
                 <td>${escapeHtml(kniha.id)}</td>
                 <td><strong>${escapeHtml(kniha.nazov)}</strong></td>
-                <td>${escapeHtml(kniha.autor_id)}</td>
+                <td>${escapeHtml(kniha.autor ?? '-')}</td>
                 <td>${escapeHtml(kniha.rok_vydania ?? '-')}</td>
                 <td>${kniha.cena == null ? '-' : `${escapeHtml(kniha.cena)} EUR`}</td>
             </tr>
@@ -56,7 +57,7 @@ const server = http.createServer((req, res) => {
     <h1>Katalóg kníh (SQLite)</h1>
     <table>
         <thead>
-            <tr><th>ID</th><th>Názov knihy</th><th>Autor ID</th><th>Rok</th><th>Cena</th></tr>
+            <tr><th>ID</th><th>Názov knihy</th><th>Autor</th><th>Rok</th><th>Cena</th></tr>
         </thead>
         <tbody>${rows}</tbody>
     </table>
