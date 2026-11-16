@@ -4,78 +4,121 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Knižnica – zoznam kníh</title>
-	<style>
-		body { font-family: Arial, sans-serif; max-width: 1000px; margin: 40px auto; padding: 0 16px; color: #222; }
-		h1 { margin-bottom: 20px; }
-		.table-wrap { overflow-x: auto; }
-		table { width: 100%; border-collapse: collapse; }
-		th, td { padding: 10px 12px; border: 1px solid #d5d5d5; text-align: left; }
-		th { background: #f1f3f5; }
-		tbody tr:nth-child(even) { background: #fafafa; }
-		#stav { margin: 12px 0; color: #555; }
-		#stav.chyba { color: #b00020; }
-		#formular-knihy { margin-top: 32px; max-width: 480px; }
-		#formular-knihy label { display: block; margin: 12px 0 4px; }
-		#formular-knihy input, #formular-knihy select, #formular-knihy button {
-			box-sizing: border-box;
-			width: 100%;
-			padding: 9px;
-			font: inherit;
-		}
-		#formular-knihy button { margin-top: 16px; cursor: pointer; }
-	</style>
+	<link rel="stylesheet" href="/style.css">
+	<link rel="stylesheet" href="/kniznica.css">
 </head>
 <body>
-	<h1>Knihy v knižnici</h1>
-	<p id="stav" role="status">Načítavam knihy…</p>
-	<div class="table-wrap">
-		<table id="tabulka-knih" hidden>
-			<thead></thead>
-			<tbody></tbody>
-		</table>
-	</div>
+	<!-- Hlavný obsah je v zaoblenom kontajneri stránky. -->
+	<main class="page-shell">
+		<div class="header-inner">
+			<!-- Nadpis stránky a správa o stave načítania kníh. -->
+			<h1>Knihy v knižnici</h1>
+			<p id="stav" role="status">Načítavam knihy…</p>
+			<!-- Tabuľku vytvorí JavaScript podľa kníh načítaných zo servera. -->
+			<div class="table-wrap">
+				<table id="tabulka-knih" hidden>
+					<thead></thead>
+					<tbody></tbody>
+				</table>
+			</div>
 
-	<section id="formular-knihy">
-		<h2>Pridať knihu</h2>
-		<form id="nova-kniha">
-			<label for="nazov">Názov knihy</label>
-			<input id="nazov" name="nazov" type="text" maxlength="255" required>
+			<!-- Formulár na pridanie novej knihy do knižnice. -->
+			<section id="formular-knihy">
+				<h2>Pridať knihu</h2>
+				<form id="nova-kniha">
+					<!-- Povinný názov knihy. -->
+					<label for="nazov">Názov knihy</label>
+					<input id="nazov" name="nazov" type="text" maxlength="255" required>
 
-			<label for="autor">Autor</label>
-			<select id="autor" name="autor_id" required>
-				<option value="">Načítavam autorov…</option>
-			</select>
+					<!-- Autorov zoznam sa naplní údajmi z API. -->
+					<label for="autor">Autor</label>
+					<select id="autor" name="autor_id" required>
+						<option value="">Načítavam autorov…</option>
+					</select>
 
-			<label for="rok">Rok vydania</label>
-			<input id="rok" name="rok" type="number" min="1" max="9999" step="1" required>
+					<!-- Povinný rok vydania knihy. -->
+					<label for="rok">Rok vydania</label>
+					<input id="rok" name="rok" type="number" min="1" max="9999" step="1" required>
 
-			<label for="cena">Cena (€)</label>
-			<input id="cena" name="cena" type="number" min="0" step="0.01" value="0" required>
+					<!-- Cena musí byť nezáporná; predvolená hodnota je nula. -->
+					<label for="cena">Cena (€)</label>
+					<input id="cena" name="cena" type="number" min="0" step="0.01" value="0" required>
 
-			<label for="zaner">Žáner (nepovinné)</label>
-			<input id="zaner" name="zaner" type="text" maxlength="100">
+					<!-- Žáner knihy je nepovinný údaj. -->
+					<label for="zaner">Žáner (nepovinné)</label>
+					<input id="zaner" name="zaner" type="text" maxlength="100">
 
-			<button type="submit">Pridať knihu</button>
+					<!-- Odoslaním formulára sa kniha uloží cez API. -->
+					<button type="submit">Pridať knihu</button>
+				</form>
+			</section>
+		</div>
+	</main>
+
+	<!-- Popup formulár, ktorý sa otvorí po kliknutí na ikonu úpravy knihy. -->
+	<dialog id="dialog-upravy" aria-labelledby="nadpis-upravy">
+		<form id="formular-upravy">
+			<h2 id="nadpis-upravy">Upraviť knihu</h2>
+			<p>Polia sú predvyplnené aktuálnymi údajmi. Ak niektoré vymažeš, pôvodná hodnota zostane.</p>
+
+			<!-- Hodnoty vybranej knihy JavaScript predvyplní; prázdne pole znamená bez zmeny. -->
+			<label for="uprava-nazov">Názov knihy</label>
+			<input id="uprava-nazov" name="nazov" type="text" maxlength="255">
+
+			<label for="uprava-autor">Autor</label>
+			<select id="uprava-autor" name="autor_id"></select>
+
+			<label for="uprava-rok">Rok vydania</label>
+			<input id="uprava-rok" name="rok" type="number" min="1" max="9999" step="1">
+
+			<label for="uprava-cena">Cena (€)</label>
+			<input id="uprava-cena" name="cena" type="number" min="0" step="0.01">
+
+			<label for="uprava-zaner">Žáner (nepovinné)</label>
+			<input id="uprava-zaner" name="zaner" type="text" maxlength="100">
+
+			<!-- Odoslanie uloží zmeny; druhé tlačidlo okno zavrie bez uloženia. -->
+			<button type="submit">Uložiť zmeny</button>
+			<button type="button" id="zrusit-upravu">Zrušiť</button>
 		</form>
-	</section>
+	</dialog>
 
 	<script>
+		// Uloženie často používaných prvkov stránky do premenných.
 		const stav = document.getElementById('stav');
 		const tabulka = document.getElementById('tabulka-knih');
 		const formular = document.getElementById('nova-kniha');
+		const dialogUpravy = document.getElementById('dialog-upravy');
+		const formularUpravy = document.getElementById('formular-upravy');
+		const knihyPodlaId = new Map();
+		let upravovanaKnihaId = null;
 
+		// Načíta spoločný navigačný panel z topbar.html.
+		fetch('/topbar.html')
+			.then(odpoved => {
+				if (!odpoved.ok) throw new Error(`Server vrátil chybu ${odpoved.status}.`);
+				return odpoved.text();
+			})
+			.then(topbar => document.body.insertAdjacentHTML('afterbegin', topbar))
+			.catch(chyba => console.error('Navigačný panel sa nepodarilo načítať:', chyba.message));
+
+		// Načíta knihy zo servera a odovzdá ich funkcii na zobrazenie.
 		async function nacitajKnihy() {
 			const odpoved = await fetch('/api/kniznica');
 			if (!odpoved.ok) throw new Error(`Server vrátil chybu ${odpoved.status}.`);
 			zobrazKnihy(await odpoved.json());
 		}
 
+		// Vytvorí hlavičku a riadky tabuľky podľa vrátených údajov o knihách.
 		function zobrazKnihy(data) {
+			// Podporí zoznam kníh priamo aj zoznam vložený do objektu odpovede.
 			const knihy = Array.isArray(data) ? data : (data.knihy ?? data.books ?? data.data ?? []);
 			const hlavicka = tabulka.querySelector('thead');
 			const telo = tabulka.querySelector('tbody');
 			telo.replaceChildren();
+			knihyPodlaId.clear();
 
+			// Pri prázdnom zozname skryje tabuľku a zobrazí informačnú správu.
 			if (!Array.isArray(knihy) || knihy.length === 0) {
 				stav.textContent = 'V databáze sa nenašli žiadne knihy.';
 				hlavicka.replaceChildren();
@@ -83,7 +126,9 @@
 				return;
 			}
 
-			const stlpce = [...new Set(knihy.flatMap(kniha => Object.keys(kniha)))];
+			// ID autora treba pre popup, ale jeho pomocný stĺpec sa v tabuľke nezobrazuje.
+			const stlpce = [...new Set(knihy.flatMap(kniha => Object.keys(kniha)))]
+				.filter(stlpec => stlpec !== 'autor_id');
 			const riadokHlavicky = document.createElement('tr');
 
 			stlpce.forEach(stlpec => {
@@ -98,8 +143,12 @@
 			riadokHlavicky.appendChild(hlavickaAkcie);
 			hlavicka.replaceChildren(riadokHlavicky);
 
+			// Vytvorí riadok pre každú knihu vrátane tlačidiel pre akcie.
 			knihy.forEach(kniha => {
+				// Uloží celý záznam, aby sa podľa ID dal predvyplniť popup formulár.
+				knihyPodlaId.set(String(kniha.id), kniha);
 				const riadok = document.createElement('tr');
+				// Vloží hodnoty knihy ako text, aby sa zobrazili bezpečne.
 				stlpce.forEach(stlpec => {
 					const bunka = document.createElement('td');
 					const hodnota = kniha[stlpec];
@@ -108,20 +157,36 @@
 						: typeof hodnota === 'object' ? JSON.stringify(hodnota) : String(hodnota);
 					riadok.appendChild(bunka);
 				});
+				// Pridá tlačidlo s ikonou úpravy; data-id a data-action slúžia ako JS háčik.
 				const bunkaAkcie = document.createElement('td');
+				bunkaAkcie.className = 'akcie-knihy';
+				const upravit = document.createElement('button');
+				upravit.type = 'button';
+				upravit.className = 'upravit-knihu';
+				upravit.dataset.action = 'edit';
+				upravit.dataset.id = kniha.id;
+				upravit.setAttribute('aria-label', `Upraviť knihu ${kniha.nazov ?? ''}`);
+				upravit.title = 'Upraviť knihu';
+				// SVG ceruzka je dekoratívna; prístupný názov poskytuje tlačidlo.
+				upravit.innerHTML = '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4Z"></path></svg>';
+				bunkaAkcie.appendChild(upravit);
+				// Samostatné označenie akcie zabezpečí, že úprava nespustí vymazanie.
 				const tlacidlo = document.createElement('button');
 				tlacidlo.type = 'button';
 				tlacidlo.textContent = 'Vymazať';
+				tlacidlo.dataset.action = 'delete';
 				tlacidlo.dataset.id = kniha.id;
 				bunkaAkcie.appendChild(tlacidlo);
 				riadok.appendChild(bunkaAkcie);
 				telo.appendChild(riadok);
 			});
 
+			// Zobrazí počet kníh a odkryje naplnenú tabuľku.
 			stav.textContent = `Počet kníh: ${knihy.length}`;
 			tabulka.hidden = false;
 		}
 
+		// Načíta autorov a vytvorí z nich možnosti vo výberovom poli formulára.
 		fetch('/api/autori')
 			.then(odpoved => {
 				if (!odpoved.ok) throw new Error(`Server vrátil chybu ${odpoved.status}.`);
@@ -131,7 +196,13 @@
 				const vyber = document.getElementById('autor');
 				vyber.replaceChildren(new Option('Vyberte autora', ''));
 				autori.forEach(autor => vyber.add(new Option(autor.meno, autor.id)));
+
+				// Rovnaké možnosti autorov sprístupní aj formuláru v popup okne.
+				const vyberUpravy = document.getElementById('uprava-autor');
+				vyberUpravy.replaceChildren(new Option('Ponechať aktuálneho autora', ''));
+				autori.forEach(autor => vyberUpravy.add(new Option(autor.meno, autor.id)));
 			})
+			// Zobrazí chybu, ak sa autorov nepodarilo načítať.
 			.catch(chyba => {
 				const vyber = document.getElementById('autor');
 				vyber.replaceChildren(new Option('Autorov sa nepodarilo načítať', ''));
@@ -139,12 +210,15 @@
 				stav.classList.add('chyba');
 			});
 
+		// Spracuje odoslanie formulára a uloží novú knihu cez API.
 		formular.addEventListener('submit', async udalost => {
 			udalost.preventDefault();
+			// Zablokuje opakované odoslanie počas spracovania požiadavky.
 			const tlacidlo = formular.querySelector('button[type="submit"]');
 			tlacidlo.disabled = true;
 
 			try {
+				// Prevedie hodnoty formulára na objekt a odošle ich serveru.
 				const udaje = Object.fromEntries(new FormData(formular));
 				const odpoved = await fetch('/api/kniznica', {
 					method: 'POST',
@@ -154,25 +228,90 @@
 				const vysledok = await odpoved.json();
 				if (!odpoved.ok) throw new Error(vysledok.error || `Server vrátil chybu ${odpoved.status}.`);
 
+				// Po úspešnom uložení vyčistí formulár a obnoví zobrazený zoznam.
 				formular.reset();
 				document.getElementById('cena').value = '0';
 				await nacitajKnihy();
 				stav.classList.remove('chyba');
 				stav.textContent = 'Kniha bola pridaná.';
 			} catch (chyba) {
+				// Chybu uloženia zobrazí používateľovi v stavovej správe.
 				stav.textContent = `Knihu sa nepodarilo pridať: ${chyba.message}`;
+				stav.classList.add('chyba');
+			} finally {
+				// Po skončení požiadavky znova povolí odoslanie formulára.
+				tlacidlo.disabled = false;
+			}
+		});
+
+		// Uloží upravenú knihu odoslanú z popup formulára.
+		formularUpravy.addEventListener('submit', async udalost => {
+			udalost.preventDefault();
+			if (upravovanaKnihaId === null) return;
+
+			const tlacidlo = formularUpravy.querySelector('button[type="submit"]');
+			tlacidlo.disabled = true;
+
+			try {
+				// Odošle nové hodnoty na server spolu s ID knihy upravovanou cez PUT.
+				const udaje = Object.fromEntries(new FormData(formularUpravy));
+				const odpoved = await fetch(`/api/kniznica/${encodeURIComponent(upravovanaKnihaId)}`, {
+					method: 'PUT',
+					headers: { 'Content-Type': 'application/json' },
+					body: JSON.stringify(udaje),
+				});
+				const vysledok = await odpoved.json();
+				if (!odpoved.ok) throw new Error(vysledok.error || `Server vrátil chybu ${odpoved.status}.`);
+
+				// Po uložení zavrie popup a načíta aktuálne údaje tabuľky.
+				dialogUpravy.close();
+				await nacitajKnihy();
+				stav.classList.remove('chyba');
+				stav.textContent = 'Kniha bola upravená.';
+			} catch (chyba) {
+				// Pri chybe ponechá popup otvorený a zobrazí dôvod neúspechu.
+				stav.textContent = `Knihu sa nepodarilo upraviť: ${chyba.message}`;
 				stav.classList.add('chyba');
 			} finally {
 				tlacidlo.disabled = false;
 			}
 		});
 
+		// Zatvorí popup bez odoslania zmien.
+		document.getElementById('zrusit-upravu').addEventListener('click', () => {
+			dialogUpravy.close();
+		});
+
+		// Spracuje kliknutia na úpravu aj vymazanie v riadkoch tabuľky.
 		tabulka.querySelector('tbody').addEventListener('click', async udalost => {
-			const tlacidlo = udalost.target.closest('button[data-id]');
+			// Pri úprave vyhľadá knihu podľa ID, predvyplní polia a otvorí popup.
+			const tlacidloUpravy = udalost.target.closest('button[data-action="edit"][data-id]');
+			if (tlacidloUpravy) {
+				const kniha = knihyPodlaId.get(String(tlacidloUpravy.dataset.id));
+				if (!kniha) {
+					stav.textContent = 'Údaje knihy sa nepodarilo nájsť.';
+					stav.classList.add('chyba');
+					return;
+				}
+
+				upravovanaKnihaId = kniha.id;
+				formularUpravy.elements.namedItem('nazov').value = kniha.nazov ?? '';
+				formularUpravy.elements.namedItem('autor_id').value = String(kniha.autor_id ?? '');
+				formularUpravy.elements.namedItem('rok').value = String(kniha.rok ?? '');
+				formularUpravy.elements.namedItem('cena').value = String(kniha.cena ?? '');
+				formularUpravy.elements.namedItem('zaner').value = kniha.zaner ?? '';
+				dialogUpravy.showModal();
+				return;
+			}
+
+			// Ďalšie spracovanie sa týka iba tlačidla na vymazanie.
+			const tlacidlo = udalost.target.closest('button[data-action="delete"][data-id]');
 			if (!tlacidlo) return;
 
+			// Dočasne zablokuje vymazanie, aby neprebehlo viackrát súčasne.
 			tlacidlo.disabled = true;
 			try {
+				// Požiada server o vymazanie knihy s ID uloženým v tlačidle.
 				const odpoved = await fetch(`/api/kniznica/${encodeURIComponent(tlacidlo.dataset.id)}`, {
 					method: 'DELETE',
 				});
@@ -181,18 +320,21 @@
 					throw new Error(chyba.error || `Server vrátil chybu ${odpoved.status}.`);
 				}
 
+				// Odstráni vymazaný riadok a aktualizuje počet kníh.
 				tlacidlo.closest('tr').remove();
 				const zostava = tabulka.querySelectorAll('tbody tr').length;
 				stav.textContent = zostava
 					? `Počet kníh: ${zostava}`
 					: 'V databáze sa nenašli žiadne knihy.';
 			} catch (chyba) {
+				// Pri chybe ponechá riadok a zobrazí dôvod neúspešného vymazania.
 				stav.textContent = `Knihu sa nepodarilo vymazať: ${chyba.message}`;
 				stav.classList.add('chyba');
 				tlacidlo.disabled = false;
 			}
 		});
 
+		// Pri úvodnom zobrazení stránky načíta a vykreslí knihy.
 		nacitajKnihy().catch(chyba => {
 			stav.textContent = `Knihy sa nepodarilo načítať: ${chyba.message}`;
 			stav.classList.add('chyba');

@@ -1,0 +1,58 @@
+/* Základný vzhľad stránky knižnice. */
+body {
+	font-family: Arial, sans-serif;
+	color: #222;
+}
+
+h1 { margin-bottom: 20px; }
+
+/* Tabuľka sa na úzkych obrazovkách môže posúvať do strán. */
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+th, td {
+	padding: 10px 12px;
+	border: 1px solid #d5d5d5;
+	text-align: left;
+}
+th { background: #f1f3f5; }
+tbody tr:nth-child(even) { background: #fafafa; }
+
+/* Správa o stave načítania a chybách. */
+#stav { margin: 12px 0; color: #555; }
+#stav.chyba { color: #b00020; }
+
+/* Formulár na pridanie knihy. */
+#formular-knihy { margin-top: 32px; max-width: 480px; }
+#formular-knihy label { display: block; margin: 12px 0 4px; }
+#formular-knihy input,
+#formular-knihy select,
+#formular-knihy button {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 9px;
+	font: inherit;
+}
+#formular-knihy button { margin-top: 16px; cursor: pointer; }
+
+/* Tlačidlá akcií v tabuľke. */
+.akcie-knihy { white-space: nowrap; }
+.upravit-knihu { margin-right: 8px; padding: 6px; cursor: pointer; }
+.upravit-knihu svg { display: block; width: 18px; height: 18px; }
+
+/* Popup formulár na úpravu knihy. */
+#dialog-upravy {
+	width: min(480px, calc(100vw - 48px));
+	border: 1px solid #d5d5d5;
+	border-radius: 8px;
+}
+#dialog-upravy::backdrop { background: rgb(0 0 0 / 45%); }
+#formular-upravy label { display: block; margin: 12px 0 4px; }
+#formular-upravy input,
+#formular-upravy select,
+#formular-upravy button {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 9px;
+	font: inherit;
+}
+#formular-upravy button { margin-top: 12px; cursor: pointer; }
