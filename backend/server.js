@@ -94,6 +94,9 @@ db.connect(error => {
     app.get('/IMG/logo_sjf.png', (req, res) => {
         res.sendFile(path.join(__dirname, '..', 'IMG', 'logo_sjf.png'));
     });
+    app.get('/404.gif', (req, res) => {
+        res.sendFile(path.join(__dirname, '..', '404.gif'));
+    });
 
     // Vráti knihy aj s menom autora.
     app.get('/api/kniznica', async (req, res) => {
@@ -192,7 +195,7 @@ db.connect(error => {
         if (req.path === '/api' || req.path.startsWith('/api/')) {
             return res.status(404).json({ error: 'API trasa sa nenašla.' });
         }
-        res.status(404).send('Stránka sa nenašla.');
+        res.status(404).sendFile(path.join(__dirname, '..', '404.html'));
     });
 
     // Spustí server na všetkých sieťových rozhraniach zariadenia.
