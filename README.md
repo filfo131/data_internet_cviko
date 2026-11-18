@@ -1,107 +1,71 @@
 # data_internet_cviko
-Cvičenia z databáz a internetu
 
-Databázy a internet
-5.10.2026
+Projekt z cvičení **Databázy a internet**. Obsahuje školské webové stránky,
+formuláre a lokálny stack MariaDB s backendom pre katalóg kníh.
 
-Zadanie 1
+## Webové stránky
 
-Zadanie je rozdelené do dvoch úloh.
+Príklady HTML a JavaScriptu sú na stránkach `index.html`, `form.html`,
+`table.html`, `list.html` a `javascript.html`. Spoločnú navigáciu vkladá
+`app.js` a vzhľad stránok určuje `style.css`.
 
-Prvou úlohou je dokončenie webstránky z cvičenia, ktorá musí obsahovať:
+`formular_zadanie.html` obsahuje polia pre meno, e-mail, telefón, dátum
+narodenia, kurz, úroveň, poznámku a súhlas s podmienkami. Vyplnené údaje sa
+zobrazujú v živom náhľade; odoslanie je iba simulované a nič sa neposiela na
+server. Jeho štýly a skripty sú v `formular_zadanie.css` a
+`formular_zadanie.js`. Obrázky patria do priečinka `IMG`. Pri odovzdávaní
+zabaľte webové stránky do ZIP súboru pomenovaného
+`priezvisko_zadanie1.zip`.
 
-1) index.html, form.html, table.html, list.html, javascript.html
-   - na jednotlivých podstránkach musia byť príklady z cvičenia 1
-   - všetky podstránky musia mať štýl definovaný v style.css
-   - každá podstránka musí obsahovať <html>, <head> a <body>
+## Databáza a backend
 
-2) style.css ako globálny stylesheet, v ktorom budú štýly pre:
-   - jednotlivé podstránky
-   - body pre všetky podstránky (definujte ho len raz a používajte na každej podstránke)
-   - topbar.html
+MariaDB a phpMyAdmin sa spúšťajú cez Docker Compose. Databáza `kniznica`
+obsahuje tabuľky `autori` a `knihy`; schéma sa vytvorí pri prvom spustení
+a údaje sa uchovávajú vo volume `mariadb_data`.
 
-3) topbar.html – navigačný topbar z cvičenia, v ktorom je rozcestník na všetky podstránky
-
-4) app.js
-   - slúži ako globálny JavaScript
-   - na každej podstránke sa pomocou neho vkladá topbar.html
-   - v ňom sa nachádzajú aj skripty z podstránky javascript.html
-
-5) Všetky podstránky musia mať upravený a jednotný vzhľad definovaný v style.css
-
-6) Všetky obrázky ukladajte do priečinka IMG
-
-Druhou úlohou je vytvorenie novej podstránky formular_zadanie.html:
-
-1) Formulár musí obsahovať nasledujúce polia:
-   - Meno a priezvisko – textové pole
-   - E-mail – pole typu email
-   - Telefónne číslo – pole typu tel
-   - Dátum narodenia – pole typu date
-   - Kurz – výber z možností HTML, CSS a JavaScript pomocou select
-   - Úroveň – výber Beginner, Intermediate alebo Advanced pomocou radio
-   - Poznámka – viacriadkové textové pole textarea
-   - Súhlas s podmienkami – checkbox
-   - Tlačidlo na odoslanie formulára
-
-2) Formulár musí byť naštýlovaný v style.css:
-   - formulár musí byť vizuálne oddelený od zvyšku stránky
-   - jednotlivé input fieldy musia mať jednotný vzhľad
-   - definujte vzhľad pre input, select, textarea a button
-   - definujte stav :focus pre input fieldy
-   - definujte stav :hover pre tlačidlo
-
-3) Vedľa formulára vytvorte živý náhľad zadaných údajov:
-   - formulár a náhľad musia byť na desktopovej obrazovke umiestnené vedľa seba
-   - náhľad musí zobrazovať minimálne meno a priezvisko, e-mail, kurz, úroveň a poznámku
-   - zobrazené údaje sa musia meniť priebežne počas vypĺňania formulára
-   - na získanie elementov použite document.getElementById()
-   - na sledovanie zmien použite eventy input a/alebo change
-   - stránka sa pri aktualizácii náhľadu nesmie obnovovať
-
-4) Odoslanie formulára bude iba simulované pomocou JavaScriptu:
-   - formulár musí reagovať na event submit
-   - pomocou event.preventDefault() zabráňte skutočnému odoslaniu a obnoveniu stránky
-   - po odoslaní sa celý formulár skryje
-   - po úspešnom odoslaní formulára zobrazte pomocou JavaScriptu funkcie alert() správu: „Formulár bol úspešne odoslaný.“
-   - údaje sa neposielajú na server
-
-5) JavaScript pre túto podstránku umiestnite do formular_zadanie.js.
-
-6) Podstránka musí mať topbar.html ako v predchádzajúcich stránkach a vlastný CSS stylesheet formular_zadanie.css.
-
-Celú webstránku zabaliť do .zip súboru a pomenujte ho ako priezvisko_zadanie1.zip.
-
-## Databáza MariaDB a phpMyAdmin
-
-Projekt obsahuje lokálny vývojový stack pre MariaDB a phpMyAdmin spúšťaný cez Docker Compose.
-Pred prvým spustením skopírujte `.env.example` do `.env` a upravte heslá:
+Pred prvým spustením vytvorte `.env` a zmeňte ukážkové heslá:
 
 ```sh
 cp .env.example .env
+docker compose up -d
 ```
 
-Spustenie a zastavenie služieb:
+Backend spustíte v druhom termináli:
 
 ```sh
-docker compose up -d
-docker compose down
+cd backend
+npm start
 ```
 
-phpMyAdmin bude dostupný na [http://localhost:8080](http://localhost:8080).
-Prihláste sa používateľom a heslom z `.env` (predvolene používateľ `cviko`).
-Databáza sa volá `kniznica`; tabuľky `autori` a `knihy` sa vytvoria pri prvom spustení.
-Údaje pretrvajú aj po zastavení kontajnerov vo volume `mariadb_data`.
+V prehliadači:
 
-phpMyAdmin publikuje port `8080` a pripája sa k MariaDB cez súkromnú Docker bridge
-sieť. V Codespaces otvorte kartu **Ports** a pri porte `8080` zvoľte
-**Open in Browser**; port nechajte ako **Private**. MariaDB používa hostiteľskú
-sieť, ale počúva iba na internej adrese Docker bridge siete.
+- Webový katalóg: [http://localhost:3000](http://localhost:3000)
+- phpMyAdmin: [http://localhost:8080](http://localhost:8080)
+- API: `GET /api/kniznica`, `GET /api/autori`, `POST /api/kniznica`,
+  `PUT /api/kniznica/:id`, `DELETE /api/kniznica/:id`
 
-Backend spustíte z priečinka `backend` príkazom `npm start`. Načíta nastavenia
-z koreňového `.env` súboru a pripojí sa k databáze MariaDB. Dostupné sú
-`GET /api/knihy` (zoznam), `POST /api/kniha` (pridanie) a
-`DELETE /api/kniha/:id` (vymazanie); HTML katalóg je na `/`.
+Do phpMyAdmin sa prihláste údajmi z `.env` (predvolený používateľ je `cviko`).
+Backend má pripojenie k databáze nastavené v `backend/server.js`; pri zmene
+prihlasovacích údajov ho upravte tiež. V Codespaces otvorte porty `3000` a
+`8080` cez kartu **Ports**; port `8080` ponechajte ako **Private**.
 
-Toto nastavenie je určené na lokálny vývoj. Nepoužívajte ukážkové heslá pri
-sprístupnení služieb mimo svojho počítača.
+## Export a obnova databázy
+
+Export vytvorí SQL zálohu mimo projektu, aby sa omylom nepridala do Git-u:
+
+```sh
+docker compose exec -T mariadb sh -c 'exec mariadb-dump -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" "$MARIADB_DATABASE"' > "$HOME/kniznica.sql"
+```
+
+Obnova zo zálohy:
+
+```sh
+docker compose exec -T mariadb sh -c 'exec mariadb -u"$MARIADB_USER" -p"$MARIADB_PASSWORD" "$MARIADB_DATABASE"' < "$HOME/kniznica.sql"
+```
+
+Obnova môže nahradiť existujúce tabuľky a ich údaje. Zálohu uchovávajte
+bezpečne, najmä ak obsahuje osobné údaje. Zastavenie služieb:
+`docker compose down` (volume s databázou zostane zachovaný).
+
+Toto nastavenie je určené na lokálny vývoj. Pred sprístupnením mimo
+počítača zmeňte ukážkové heslá.
